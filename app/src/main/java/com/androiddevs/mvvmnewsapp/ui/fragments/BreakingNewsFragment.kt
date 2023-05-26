@@ -17,16 +17,16 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     lateinit var viewModel: NewsViewModel
     lateinit var newsAdapter: NewsAdapter
+
     val TAG = "BreakingNewsFragment"
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = (activity as NewsActivity).viewModel
-
         setupRecyclerView()
 
-        viewModel.breakingNews.observe(viewLifecycleOwner, Observer{ response ->
-            when(response){
+        viewModel.breakingNews.observe(viewLifecycleOwner, Observer { response ->
+            when(response) {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let { newsResponse ->
@@ -46,18 +46,18 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
         })
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         paginationProgressBar.visibility = View.INVISIBLE
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         paginationProgressBar.visibility = View.VISIBLE
     }
 
-    private fun setupRecyclerView(){
+    private fun setupRecyclerView() {
         newsAdapter = NewsAdapter()
         rvBreakingNews.apply {
-            adapter = NewsAdapter()
+            adapter = newsAdapter
             layoutManager = LinearLayoutManager(activity)
         }
     }
